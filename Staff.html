@@ -1,34 +1,10 @@
-<?php
-session_start();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    if ($username === 'viktor' && $password === 'viktor@cool') {
-        $_SESSION['username'] = $username;
-        $_SESSION['password'] = $password;
-        header('Location: StaffPage.php');
-        exit;
-    } else {
-        // Invalid login credentials, display error message
-        echo "<script>alert('Invalid username or password. Please try again.'); window.location.href = 'StaffLogin.html';</script>";
-    }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    if (!isset($_SESSION['username']) || !isset($_SESSION['password']) || $_SESSION['username'] !== 'viktor' || $_SESSION['password'] !== 'viktor@cool') {
-        header('Location: StaffLogin.html');
-        exit;
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee Cafe - Staff Page</title>
+    <title>Coffee Cafe - Staff Login</title>
     <style>
         /* Your CSS styling goes here */
     </style>
@@ -36,19 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <header>
-        <h1>Coffee Cafe - Staff Page</h1>
+        <h1>Coffee Cafe - Staff Login</h1>
     </header>
 
-    <!-- Staff page -->
-    <div class="staff-container">
-        <h1>Staff Page</h1>
+    <!-- Staff login page -->
+    <div class="login-container">
+        <h2>Staff Login</h2>
 
-        <button class="back-button" onclick="goBack()">Back</button>
-        <button class="logout-button" onclick="logout()">Logout</button>
-
-        <ul class="order-list">
-            <!-- Orders will be dynamically added here -->
-        </ul>
+        <form class="login-form" onsubmit="login(event)">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
     </div>
 
     <footer>
@@ -56,16 +31,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </footer>
 
     <script>
-        // JavaScript code goes here
+        function login(event) {
+            event.preventDefault(); // Prevent form submission
 
-        // Go back to the login page
-        function goBack() {
-            window.location.href = 'StaffLogin.html';
-        }
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
 
-        // Logout from the staff page
-        function logout() {
-            window.location.href = 'StaffLogin.html';
+            // Validate login credentials
+            if (username === "viktor" && password === "viktor@cool") {
+                // Store login status in local storage
+                localStorage.setItem("isLoggedIn", true);
+
+                // Redirect to the staff page
+                window.location.href = "staff.html";
+            } else {
+                alert("Invalid username or password. Please try again.");
+            }
         }
     </script>
 </body>
