@@ -1,7 +1,7 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $username = $_GET['username'];
+    $password = $_GET['password'];
 
     if ($username === 'viktor' && $password === 'viktor@cool') {
         // Display staff page with orders
