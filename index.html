@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Cafe</title>
+    <style>
+        /* CSS styles */
+    </style>
+    <script>
+        function placeOrder(item) {
+            // Create an AJAX request to send the order data to the server
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Handle the response from the server if needed
+                    console.log("Order placed successfully");
+                }
+            };
+            xhttp.open("POST", "process-order.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("item=" + item);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to Coffee Cafe</h1>
+        
+        <ul>
+            <li>
+                <h2>Ristretto</h2>
+                <p>A concentrated espresso shot with a balanced flavor.</p>
+                <button class="order-button" onclick="placeOrder('Ristretto')">Order Now</button>
+            </li>
+            <li>
+                <h2>Intenso</h2>
+                <p>A rich and bold coffee with a deep flavor profile.</p>
+                <button class="order-button" onclick="placeOrder('Intenso')">Order Now</button>
+            </li>
+            <li>
+                <h2>Arabica</h2>
+                <p>A smooth and aromatic coffee made from high-quality Arabica beans.</p>
+                <button class="order-button" onclick="placeOrder('Arabica')">Order Now</button>
+            </li>
+            <li>
+                <h2>Espresso</h2>
+                <p>A classic Italian coffee known for its intense flavor and thick crema.</p>
+                <button class="order-button" onclick="placeOrder('Espresso')">Order Now</button>
+            </li>
+            <li>
+                <h2>Lungo</h2>
+                <p>A long espresso shot with a milder taste and more water.</p>
+                <button class="order-button" onclick="placeOrder('Lungo')">Order Now</button>
+            </li>
+            <li>
+                <h2>Verona</h2>
+                <p>A dark roast coffee with a rich, smoky flavor.</p>
+                <button class="order-button" onclick="placeOrder('Verona')">Order Now</button>
+            </li>
+        </ul>
+        
+        <div class="owner">
+            <p>Owned by Viktor</p>
+        </div>
+    </div>
+</body>
+
+</html>

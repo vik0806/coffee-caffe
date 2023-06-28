@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Cafe - Staff Page</title>
+    <style>
+        /* CSS styles */
+    </style>
+    <script>
+        function getLiveOrders() {
+            // Create an AJAX request to fetch the live orders from the server
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Process the response and update the staff page with the orders
+                    var orders = JSON.parse(this.responseText);
+                    var orderList = document.getElementById("order-list");
+                    orderList.innerHTML = ""; // Clear existing orders
+                    for (var i = 0; i < orders.length; i++) {
+                        var order = orders[i];
+                        var orderItem = document.createElement("li");
+                        orderItem.innerHTML = "<h3>Order #" + order.orderNumber + "</h3>" +
+                            "<p>Item: " + order.item + "</p>" +
+                            "<p>Customer: " + order.customerName + "</p>";
+                        orderList.appendChild(orderItem);
+                    }
+                }
+            };
+            xhttp.open("GET", "get-orders.php", true);
+            xhttp.send();
+        }
+        
+        // Call the getLiveOrders function initially and set an interval to refresh the orders every few seconds
+        getLiveOrders();
+        setInterval(getLiveOrders, 5000); // Refresh orders every 5 seconds
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Staff Page - Live Orders</h1>
+        
+        <ul id="order-list"></ul>
+    </div>
+</body>
+
+</html>
