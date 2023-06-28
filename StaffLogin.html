@@ -19,16 +19,34 @@
     <div class="login-container">
         <h2>Staff Login</h2>
 
-        <form class="login-form" method="POST" action="StaffPage.php">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="submit" value="Login">
+        <form class="login-form">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="button" value="Login" onclick="login()">
         </form>
     </div>
 
     <footer>
         <p>&copy; 2023 Coffee Cafe. All rights reserved.</p>
     </footer>
+
+    <script>
+        function login() {
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Validate login credentials
+            if (username === "viktor" && password === "viktor@cool") {
+                // Store login status in local storage
+                localStorage.setItem("isLoggedIn", true);
+
+                // Redirect to the staff page
+                window.location.href = "staff.html";
+            } else {
+                alert("Invalid username or password. Please try again.");
+            }
+        }
+    </script>
 </body>
 
 </html>
