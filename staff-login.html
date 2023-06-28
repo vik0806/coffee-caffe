@@ -6,31 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coffee Cafe - Staff Login</title>
     <style>
-        /* CSS styles */
+        /* Your CSS styling goes here */
     </style>
-    <script>
-        function login() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
-            
-            if (username === "viktor" && password === "viktor@cool") {
-                // Redirect to the staff page upon successful login
-                window.location.href = "staff-page.html";
-            } else {
-                alert("Invalid username or password. Please try again.");
-            }
-        }
-    </script>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Staff Login</h1>
-        
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="login()">Login</button>
+    <header>
+        <h1>Coffee Cafe - Staff Login</h1>
+    </header>
+
+    <!-- Staff login page -->
+    <div class="login-container">
+        <h2>Staff Login</h2>
+
+        <form class="login-form" method="POST" action="StaffPage.php">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" value="Login">
+        </form>
     </div>
+
+    <footer>
+        <p>&copy; 2023 Coffee Cafe. All rights reserved.</p>
+    </footer>
 </body>
 
 </html>
