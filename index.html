@@ -6,73 +6,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coffee Cafe</title>
     <style>
-        /* Your CSS styling goes here */
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+        }
+
+        header h1, footer p {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Index Page Styles */
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        .order-form input[type="text"],
+        .order-form select,
+        .order-form input[type="submit"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .order-details {
+            margin-top: 20px;
+        }
+
+        /* Navigation Styles */
+        nav {
+            background-color: #333;
+            padding: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            margin-right: 10px;
+        }
+
+        .nav-menu li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+
+        .nav-menu li a:hover {
+            background-color: #666;
+        }
+
+        /* Footer Styles */
+        footer p {
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
     <header>
-        <h1>Coffee Cafe</h1>
+        <div class="container">
+            <h1>Coffee Cafe</h1>
+        </div>
     </header>
 
-    <!-- Homepage -->
+    <!-- Index page -->
     <div class="container">
-        <h2>Welcome to Coffee Cafe</h2>
+        <h2>Place an Order</h2>
 
-        <ul>
-            <li>
-                <h3>Ristretto</h3>
-                <p>A concentrated espresso shot with a balanced flavor.</p>
-                <button class="order-button" onclick="placeOrder('Ristretto')">Order Now</button>
-            </li>
-            <li>
-                <h3>Intenso</h3>
-                <p>A rich and bold coffee with a deep flavor profile.</p>
-                <button class="order-button" onclick="placeOrder('Intenso')">Order Now</button>
-            </li>
-            <li>
-                <h3>Arabica</h3>
-                <p>A smooth and aromatic coffee made from high-quality Arabica beans.</p>
-                <button class="order-button" onclick="placeOrder('Arabica')">Order Now</button>
-            </li>
-            <li>
-                <h3>Espresso</h3>
-                <p>A classic Italian coffee known for its intense flavor and thick crema.</p>
-                <button class="order-button" onclick="placeOrder('Espresso')">Order Now</button>
-            </li>
-            <li>
-                <h3>Lungo</h3>
-                <p>A long espresso shot with a milder taste and more water.</p>
-                <button class="order-button" onclick="placeOrder('Lungo')">Order Now</button>
-            </li>
-            <li>
-                <h3>Verona</h3>
-                <p>A dark roast coffee with a rich, smoky flavor.</p>
-                <button class="order-button" onclick="placeOrder('Verona')">Order Now</button>
-            </li>
-        </ul>
+        <form class="order-form" onsubmit="placeOrder(event)">
+            <input type="text" id="customer-name" placeholder="Your Name" required>
+            <select id="coffee-selection">
+                <option value="ristretto">Ristretto - Strong and concentrated espresso</option>
+                <option value="intenso">Intenso - Rich and bold espresso</option>
+                <option value="arabica">Arabica - Smooth and balanced coffee</option>
+                <option value="espresso">Espresso - Classic Italian espresso</option>
+                <option value="lungo">Lungo - Long espresso for a milder taste</option>
+                <option value="verona">Verona - Dark and velvety coffee</option>
+            </select>
+            <input type="submit" value="Order">
+        </form>
 
-        <div class="owner">
-            <p>Owned by Viktor</p>
+        <div class="order-details">
+            <h3>Your Order:</h3>
+            <p><span id="customer-name-display"></span> ordered <span id="order-display"></span>.</p>
         </div>
     </div>
 
+    <!-- Navigation pane -->
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="staff.html">Staff Portal</a></li>
+            </ul>
+        </div>
+    </nav>
+
     <footer>
-        <p>&copy; 2023 Coffee Cafe. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2023 Coffee Cafe. All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
         // JavaScript code goes here
 
-        // Place order function
-        function placeOrder(coffeeType) {
-            // Create a new list item for the order
-            var orderItem = document.createElement("li");
-            orderItem.innerHTML = `<span>Order #${Date.now()}</span><span>Status: In Progress</span>`;
+        // Place an order
+        function placeOrder(event) {
+            event.preventDefault();
 
-            // Append the order item to the order list
-            var orderList = document.getElementById("order-list");
-            orderList.appendChild(orderItem);
+            var customerNameInput = document.getElementById("customer-name");
+            var coffeeSelectionInput = document.getElementById("coffee-selection");
+            var customerNameDisplay = document.getElementById("customer-name-display");
+            var orderDisplay = document.getElementById("order-display");
+
+            var customerName = customerNameInput.value;
+            var coffeeSelection = coffeeSelectionInput.value;
+
+            customerNameDisplay.textContent = customerName;
+            orderDisplay.textContent = coffeeSelection;
+
+            // Reset form
+            customerNameInput.value = "";
+            coffeeSelectionInput.selectedIndex = 0;
         }
     </script>
 </body>

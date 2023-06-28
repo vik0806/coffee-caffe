@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee Cafe - Staff Page</title>
+    <title>Coffee Cafe - Staff Portal</title>
     <style>
         /* Your CSS styling goes here */
     </style>
@@ -12,17 +12,39 @@
 
 <body>
     <header>
-        <h1>Coffee Cafe - Staff Page</h1>
+        <h1>Coffee Cafe - Staff Portal</h1>
     </header>
 
-    <!-- Staff page -->
+    <!-- Staff portal -->
     <div class="staff-container">
-        <h1>Staff Page</h1>
+        <h2>Staff Portal</h2>
 
-        <ul class="order-list">
-            <!-- Orders will be dynamically added here -->
-        </ul>
+        <section id="orders">
+            <h3>Orders</h3>
+            <ul class="order-list">
+                <!-- Orders will be dynamically added here -->
+            </ul>
+        </section>
+
+        <section id="staff-notes">
+            <h3>Staff Notes</h3>
+            <form class="note-form" onsubmit="addNote(event)">
+                <textarea id="note-input" placeholder="Enter a note..."></textarea>
+                <input type="submit" value="Add Note">
+            </form>
+            <ul class="note-list">
+                <!-- Notes will be dynamically added here -->
+            </ul>
+        </section>
     </div>
+
+    <!-- Navigation pane -->
+    <nav>
+        <ul class="nav-menu">
+            <li><a href="#orders">Orders</a></li>
+            <li><a href="#staff-notes">Staff Notes</a></li>
+        </ul>
+    </nav>
 
     <footer>
         <p>&copy; 2023 Coffee Cafe. All rights reserved.</p>
@@ -35,11 +57,27 @@
         var orders = JSON.parse(localStorage.getItem("orders")) || [];
 
         // Display orders on the staff page
-        var orderList = document.querySelector(".order-list");
+        var orderList = document.querySelector("#orders .order-list");
         if (orders.length > 0) {
             orders.forEach(function (order) {
                 var listItem = document.createElement("li");
-                listItem.textContent = "Order ID: " + order.id + " | Status: " + order.status;
+                listItem.textContent = "Order ID: " + order.id + " | Customer: " + order.customerName + " | Status: " + order.status;
+
+                var inProgressButton = document.createElement("button");
+                inProgressButton.textContent = "In Progress";
+                inProgressButton.addEventListener("click", function () {
+                    markInProgress(order.id);
+                });
+
+                var doneButton = document.createElement("button");
+                doneButton.textContent = "Done";
+                doneButton.addEventListener("click", function () {
+                    markDone(order.id);
+                });
+
+                listItem.appendChild(inProgressButton);
+                listItem.appendChild(doneButton);
+
                 orderList.appendChild(listItem);
             });
         } else {
@@ -53,13 +91,10 @@
             orders.forEach(function (order) {
                 if (order.id === orderId) {
                     order.status = "In Progress";
-                    // Update the order status in local storage
                     localStorage.setItem("orders", JSON.stringify(orders));
-                    // Send tracking information to the customer
-                    sendTrackingInfo(order);
+                    refreshOrderList();
                 }
             });
-            refreshOrderList();
         }
 
         // Update order status to "Done"
@@ -67,34 +102,21 @@
             orders.forEach(function (order) {
                 if (order.id === orderId) {
                     order.status = "Done";
-                    // Update the order status in local storage
                     localStorage.setItem("orders", JSON.stringify(orders));
-                    // Send tracking information to the customer
-                    sendTrackingInfo(order);
+                    refreshOrderList();
                 }
             });
-            refreshOrderList();
-        }
-
-        // Send tracking information to the customer
-        function sendTrackingInfo(order) {
-            // Simulate sending an email to the customer with tracking information
-            var trackingInfo = "Order ID: " + order.id + " | Status: " + order.status;
-            console.log("Sending tracking information to the customer:", trackingInfo);
-            // You can replace the console.log statement with the actual code to send an email or notification to the customer.
         }
 
         // Refresh the order list on the staff page
         function refreshOrderList() {
-            // Clear existing order list
             orderList.innerHTML = "";
 
             if (orders.length > 0) {
                 orders.forEach(function (order) {
                     var listItem = document.createElement("li");
-                    listItem.textContent = "Order ID: " + order.id + " | Status: " + order.status;
+                    listItem.textContent = "Order ID: " + order.id + " | Customer: " + order.customerName + " | Status: " + order.status;
 
-                    // Add buttons to mark order as "In Progress" and "Done"
                     var inProgressButton = document.createElement("button");
                     inProgressButton.textContent = "In Progress";
                     inProgressButton.addEventListener("click", function () {
@@ -119,8 +141,48 @@
             }
         }
 
-        // Call the refreshOrderList function initially
-        refreshOrderList();
+        // Add a note to an order
+        function addNote(event) {
+            event.preventDefault();
+
+            var noteInput = document.getElementById("note-input");
+            var noteText = noteInput.value;
+
+            if (noteText.trim() !== "") {
+                orders.forEach(function (order) {
+                    if (order.id === orderId) {
+                        order.notes += "- " + noteText + "\n";
+                        localStorage.setItem("orders", JSON.stringify(orders));
+                        refreshNoteList(order.id);
+                    }
+                });
+
+                noteInput.value = "";
+            }
+        }
+
+        // Refresh the note list for a specific order
+        function refreshNoteList(orderId) {
+            var noteList = document.querySelector("#staff-notes .note-list");
+            noteList.innerHTML = "";
+
+            orders.forEach(function (order) {
+                if (order.id === orderId) {
+                    var notes = order.notes.trim().split("\n");
+                    if (notes.length > 0) {
+                        notes.forEach(function (note) {
+                            var listItem = document.createElement("li");
+                            listItem.textContent = note;
+                            noteList.appendChild(listItem);
+                        });
+                    } else {
+                        var listItem = document.createElement("li");
+                        listItem.textContent = "No notes found.";
+                        noteList.appendChild(listItem);
+                    }
+                }
+            });
+        }
     </script>
 </body>
 
