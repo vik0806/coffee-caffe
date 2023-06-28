@@ -19,10 +19,10 @@
     <div class="login-container">
         <h2>Staff Login</h2>
 
-        <form class="login-form">
+        <form class="login-form" onsubmit="login(event)">
             <input type="text" id="username" placeholder="Username" required>
             <input type="password" id="password" placeholder="Password" required>
-            <input type="button" value="Login" onclick="login()">
+            <input type="submit" value="Login">
         </form>
     </div>
 
@@ -31,7 +31,9 @@
     </footer>
 
     <script>
-        function login() {
+        function login(event) {
+            event.preventDefault(); // Prevent form submission
+
             var username = document.getElementById("username").value;
             var password = document.getElementById("password").value;
 
@@ -41,7 +43,7 @@
                 localStorage.setItem("isLoggedIn", true);
 
                 // Redirect to the staff page
-                window.location.href = "staff.php";
+                window.location.href = "staff.html";
             } else {
                 alert("Invalid username or password. Please try again.");
             }
