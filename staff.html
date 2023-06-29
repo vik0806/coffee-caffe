@@ -1,242 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee Cafe Staff Portal</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        h1, h2, h3 {
-            margin-top: 0;
-        }
-
-        #order-list {
-            margin-top: 20px;
-        }
-
-        .order-item {
-            background-color: #f4f4f4;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .order-id {
-            font-weight: bold;
-        }
-
-        .notes-button {
-            margin-top: 10px;
-            padding: 5px 10px;
-            background-color: #333;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        #staff-notes {
-            margin-top: 20px;
-        }
-
-        .note-list {
-            margin-top: 10px;
-            padding-left: 20px;
-        }
-
-        nav {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-        }
-
-        .nav-menu {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-        }
-
-        .nav-menu li {
-            margin-right: 10px;
-        }
-
-        .nav-menu li a {
-            color: #fff;
-            text-decoration: none;
-            padding: 5px;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        footer p {
-            margin: 0;
-        }
-    </style>
+  <title>Coffee Shop - Orders</title>
+  <style>
+    /* Add your custom CSS styles here */
+  </style>
 </head>
-
 <body>
-    <header>
-        <div class="container">
-            <h1>Staff Portal</h1>
-        </div>
-    </header>
+  <!-- Orders Display Page -->
+  <h2>Orders</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Order</th>
+        <th>Time</th>
+        <th>Process Status</th>
+      </tr>
+    </thead>
+    <tbody id="ordersTable">
+      <!-- Orders will be dynamically added here -->
+    </tbody>
+  </table>
 
-    <!-- Staff page -->
-    <div class="container">
-        <h2>Order Tracking</h2>
+  <script>
+    // Personal access token
+    const accessToken = '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';
 
-        <div id="order-list">
-            <!-- Orders will be dynamically added here -->
-        </div>
+    // Retrieve orders from a JSON file and populate the table
+    window.onload = function() {
+      fetch('https://vik0806.github.io/coffee-caffe/orders_new.json')
+        .then(response => response.json())
+        .then(orders => {
+          const tableBody = document.getElementById('ordersTable');
+          orders.forEach(order => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${order.coffee}</td>
+              <td>${order.time}</td>
+              <td>
+                <select onchange="updateProcessStatus(this.value, '${order.time}')">
+                  <option value="In Progress" ${order.processStatus === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                  <option value="Completed" ${order.processStatus === 'Completed' ? 'selected' : ''}>Completed</option>
+                  <option value="Cancelled" ${order.processStatus === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+                </select>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        });
+    };
 
-        <div id="staff-notes">
-            <h3>Order Notes</h3>
-            <ul class="note-list">
-                <!-- Notes will be dynamically added here -->
-            </ul>
-        </div>
-    </div>
-
-    <!-- Navigation pane -->
-    <nav>
-        <div class="container">
-            <ul class="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="staff.html">Staff Portal</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Coffee Cafe. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        // JavaScript code goes here
-
-        var orders = JSON.parse(localStorage.getItem("orders")) || [];
-
-        // Display orders on the staff page
-        var orderList = document.getElementById("order-list");
-
-        function refreshOrderList() {
-            orderList.innerHTML = "";
-
-            if (orders.length > 0) {
-                orders.forEach(function (order) {
-                    var listItem = document.createElement("div");
-                    listItem.classList.add("order-item");
-
-                    var orderId = document.createElement("span");
-                    orderId.classList.add("order-id");
-                    orderId.textContent = "Order ID: " + order.id;
-                    listItem.appendChild(orderId);
-
-                    var customerName = document.createElement("p");
-                    customerName.textContent = "Customer: " + order.customerName;
-                    listItem.appendChild(customerName);
-
-                    var coffeeSelection = document.createElement("p");
-                    coffeeSelection.textContent = "Coffee: " + order.coffeeSelection;
-                    listItem.appendChild(coffeeSelection);
-
-                    var orderStatus = document.createElement("p");
-                    orderStatus.textContent = "Status: " + order.status;
-                    listItem.appendChild(orderStatus);
-
-                    var notesButton = document.createElement("button");
-                    notesButton.textContent = "View Notes";
-                    notesButton.classList.add("notes-button");
-                    notesButton.setAttribute("data-order-id", order.id);
-                    listItem.appendChild(notesButton);
-
-                    orderList.appendChild(listItem);
-                });
-
-                // Add event listeners to notes buttons
-                var notesButtons = document.querySelectorAll(".notes-button");
-                notesButtons.forEach(function (button) {
-                    button.addEventListener("click", viewNotes);
-                });
-            } else {
-                var noOrdersMessage = document.createElement("p");
-                noOrdersMessage.textContent = "No orders found.";
-                orderList.appendChild(noOrdersMessage);
+    // Update the process status of an order
+    function updateProcessStatus(processStatus, orderTime) {
+      // Fetch the orders JSON file
+      fetch('https://vik0806.github.io/coffee-caffe/orders_new.json')
+        .then(response => response.json())
+        .then(orders => {
+          // Find the order to update
+          const updatedOrders = orders.map(order => {
+            if (order.time === orderTime) {
+              order.processStatus = processStatus;
             }
-        }
+            return order;
+          });
 
-        // View notes for an order
-        function viewNotes(event) {
-            var orderId = event.target.getAttribute("data-order-id");
-
-            orders.forEach(function (order) {
-                if (order.id === orderId) {
-                    var noteList = document.querySelector("#staff-notes .note-list");
-                    noteList.innerHTML = "";
-
-                    var notes = order.notes.trim().split("\n");
-                    if (notes.length > 0) {
-                        notes.forEach(function (note) {
-                            var listItem = document.createElement("li");
-                            listItem.textContent = note;
-                            noteList.appendChild(listItem);
-                        });
-                    } else {
-                        var listItem = document.createElement("li");
-                        listItem.textContent = "No notes found.";
-                        noteList.appendChild(listItem);
-                    }
-                }
-            });
-        }
-
-        // Update order status
-        function updateOrderStatus(orderId, newStatus) {
-            orders.forEach(function (order) {
-                if (order.id === orderId) {
-                    order.status = newStatus;
-                }
-            });
-
-            refreshOrderList();
-            saveOrdersToLocalStorage();
-        }
-
-        // Save orders to local storage
-        function saveOrdersToLocalStorage() {
-            localStorage.setItem("orders", JSON.stringify(orders));
-        }
-
-        // Refresh order list on page load
-        refreshOrderList();
-    </script>
+          // Save the updated orders to the new JSON file
+          fetch('https://api.github.com/repos/vik0806/coffee-caffe/contents/orders_new.json', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+              message: 'Update orders_new.json',
+              content: btoa(JSON.stringify(updatedOrders, null, 2)),
+            }),
+          })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Error updating process status.');
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            alert('An error occurred while updating the process status.');
+          });
+        });
+    }
+  </script>
 </body>
-
 </html>

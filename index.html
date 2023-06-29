@@ -1,190 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee Cafe</title>
-    <style>
-        /* Global Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-
-        h1, h2, h3 {
-            color: #333;
-        }
-
-        header, footer {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-        }
-
-        header h1, footer p {
-            margin: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Index Page Styles */
-        .order-form {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 300px;
-            margin: 20px auto;
-        }
-
-        .order-form input[type="text"],
-        .order-form select,
-        .order-form input[type="submit"] {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .order-details {
-            margin-top: 20px;
-        }
-
-        /* Navigation Styles */
-        nav {
-            background-color: #333;
-            padding: 10px;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-menu li {
-            margin-right: 10px;
-        }
-
-        .nav-menu li a {
-            color: #fff;
-            text-decoration: none;
-            padding: 5px 10px;
-        }
-
-        .nav-menu li a:hover {
-            background-color: #666;
-        }
-
-        /* Footer Styles */
-        footer p {
-            text-align: center;
-        }
-    </style>
+  <title>Coffee Shop</title>
+  <style>
+    /* Add your custom CSS styles here */
+  </style>
 </head>
-
 <body>
-    <header>
-        <div class="container">
-            <h1>Coffee Cafe</h1>
-        </div>
-    </header>
+  <!-- Home Page -->
+  <h1>Welcome to our Coffee Shop!</h1>
+  <p>Choose from our delicious selection of coffee:</p>
+  <ul>
+    <li>Ristretto</li>
+    <li>Intenso</li>
+    <li>Arabica</li>
+    <li>Espresso</li>
+    <li>Lungo</li>
+    <li>Veronica</li>
+  </ul>
+  <a href="orders.html">Place an Order</a>
 
-    <!-- Index page -->
-    <div class="container">
-        <h2>Place an Order</h2>
-
-        <form class="order-form" onsubmit="placeOrder(event)">
-            <input type="text" id="customer-name" placeholder="Your Name" required>
-            <select id="coffee-selection">
-                <option value="ristretto">Ristretto - Strong and concentrated espresso</option>
-                <option value="intenso">Intenso - Rich and bold espresso</option>
-                <option value="arabica">Arabica - Smooth and balanced coffee</option>
-                <option value="espresso">Espresso - Classic Italian espresso</option>
-                <option value="lungo">Lungo - Long espresso for a milder taste</option>
-                <option value="verona">Verona - Dark and velvety coffee</option>
-            </select>
-            <input type="submit" value="Order">
-        </form>
-
-        <div class="order-details">
-            <h3>Your Order:</h3>
-            <p><span id="customer-name-display"></span> ordered <span id="order-display"></span>.</p>
-        </div>
-    </div>
-
-    <!-- Navigation pane -->
-    <nav>
-        <div class="container">
-            <ul class="nav-menu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="staff.html">Staff Portal</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 Coffee Cafe. All rights reserved.</p>
-        </div>
-    </footer>
-
-    
- <script>
-    // JavaScript code goes here
-
-    // Place an order
-    function placeOrder(event) {
-        event.preventDefault();
-
-        var customerNameInput = document.getElementById("customer-name");
-        var coffeeSelectionInput = document.getElementById("coffee-selection");
-        var customerNameDisplay = document.getElementById("customer-name-display");
-        var orderDisplay = document.getElementById("order-display");
-
-        var customerName = customerNameInput.value;
-        var coffeeSelection = coffeeSelectionInput.value;
-
-        customerNameDisplay.textContent = customerName;
-        orderDisplay.textContent = coffeeSelection;
-
-        // Reset form
-        customerNameInput.value = "";
-        coffeeSelectionInput.selectedIndex = 0;
-
-        // Show notes for 5 minutes
-        var noteContainer = document.querySelector(".note-container");
-        noteContainer.style.display = "block";
-
-        setTimeout(function () {
-            noteContainer.style.display = "none";
-        }, 300000);
-    }
-
-    // Retrieve notes from local storage
-    var notes = JSON.parse(localStorage.getItem("notes")) || [];
-
-    // Display notes on the index page
-    var noteList = document.getElementById("note-list");
-    if (notes.length > 0) {
-        notes.forEach(function (note) {
-            var listItem = document.createElement("li");
-            listItem.textContent = note;
-            noteList.appendChild(listItem);
-        });
-    } else {
-        var listItem = document.createElement("li");
-        listItem.textContent = "No notes found.";
-        noteList.appendChild(listItem);
-    }
-</script>
-    </script>
+  <script>
+    // Redirect to the orders page
+    window.location.href = 'orders.html';
+  </script>
 </body>
-
 </html>
