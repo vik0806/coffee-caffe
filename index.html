@@ -135,28 +135,55 @@
         </div>
     </footer>
 
-    <script>
-        // JavaScript code goes here
+    
+ <script>
+    // JavaScript code goes here
 
-        // Place an order
-        function placeOrder(event) {
-            event.preventDefault();
+    // Place an order
+    function placeOrder(event) {
+        event.preventDefault();
 
-            var customerNameInput = document.getElementById("customer-name");
-            var coffeeSelectionInput = document.getElementById("coffee-selection");
-            var customerNameDisplay = document.getElementById("customer-name-display");
-            var orderDisplay = document.getElementById("order-display");
+        var customerNameInput = document.getElementById("customer-name");
+        var coffeeSelectionInput = document.getElementById("coffee-selection");
+        var customerNameDisplay = document.getElementById("customer-name-display");
+        var orderDisplay = document.getElementById("order-display");
 
-            var customerName = customerNameInput.value;
-            var coffeeSelection = coffeeSelectionInput.value;
+        var customerName = customerNameInput.value;
+        var coffeeSelection = coffeeSelectionInput.value;
 
-            customerNameDisplay.textContent = customerName;
-            orderDisplay.textContent = coffeeSelection;
+        customerNameDisplay.textContent = customerName;
+        orderDisplay.textContent = coffeeSelection;
 
-            // Reset form
-            customerNameInput.value = "";
-            coffeeSelectionInput.selectedIndex = 0;
-        }
+        // Reset form
+        customerNameInput.value = "";
+        coffeeSelectionInput.selectedIndex = 0;
+
+        // Show notes for 5 minutes
+        var noteContainer = document.querySelector(".note-container");
+        noteContainer.style.display = "block";
+
+        setTimeout(function () {
+            noteContainer.style.display = "none";
+        }, 300000);
+    }
+
+    // Retrieve notes from local storage
+    var notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+    // Display notes on the index page
+    var noteList = document.getElementById("note-list");
+    if (notes.length > 0) {
+        notes.forEach(function (note) {
+            var listItem = document.createElement("li");
+            listItem.textContent = note;
+            noteList.appendChild(listItem);
+        });
+    } else {
+        var listItem = document.createElement("li");
+        listItem.textContent = "No notes found.";
+        noteList.appendChild(listItem);
+    }
+</script>
     </script>
 </body>
 
