@@ -1,92 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Coffee Shop - Orders</title>
+  <title>Staff Page - Viktor's Coffee Cafe</title>
   <style>
-    /* Add your custom CSS styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #D2B48C;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+
+    .stock-form {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    .update-button {
+      display: inline-block;
+      background-color: #8B4513;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .update-button:hover {
+      background-color: #A0522D;
+    }
   </style>
-</head>
-<body>
-  <!-- Orders Display Page -->
-  <h2>Orders</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Order</th>
-        <th>Time</th>
-        <th>Process Status</th>
-      </tr>
-    </thead>
-    <tbody id="ordersTable">
-      <!-- Orders will be dynamically added here -->
-    </tbody>
-  </table>
-
   <script>
-    // Personal access token
-    const accessToken = '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';
-
-    // Retrieve orders from a JSON file and populate the table
-    window.onload = function() {
-      fetch('https://vik0806.github.io/coffee-caffe/orders_new.json')
-        .then(response => response.json())
-        .then(orders => {
-          const tableBody = document.getElementById('ordersTable');
-          orders.forEach(order => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-              <td>${order.coffee}</td>
-              <td>${order.time}</td>
-              <td>
-                <select onchange="updateProcessStatus(this.value, '${order.time}')">
-                  <option value="In Progress" ${order.processStatus === 'In Progress' ? 'selected' : ''}>In Progress</option>
-                  <option value="Completed" ${order.processStatus === 'Completed' ? 'selected' : ''}>Completed</option>
-                  <option value="Cancelled" ${order.processStatus === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
-                </select>
-              </td>
-            `;
-            tableBody.appendChild(row);
-          });
-        });
-    };
-
-    // Update the process status of an order
-    function updateProcessStatus(processStatus, orderTime) {
-      // Fetch the orders JSON file
-      fetch('https://vik0806.github.io/coffee-caffe/orders_new.json')
-        .then(response => response.json())
-        .then(orders => {
-          // Find the order to update
-          const updatedOrders = orders.map(order => {
-            if (order.time === orderTime) {
-              order.processStatus = processStatus;
-            }
-            return order;
-          });
-
-          // Save the updated orders to the new JSON file
-          fetch('https://api.github.com/repos/vik0806/coffee-caffe/contents/orders_new.json', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify({
-              message: 'Update orders_new.json',
-              content: btoa(JSON.stringify(updatedOrders, null, 2)),
-            }),
-          })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Error updating process status.');
-            }
-          })
-          .catch(error => {
-            console.error(error);
-            alert('An error occurred while updating the process status.');
-          });
-        });
+    function updateStock(coffeeName) {
+      var stock = document.querySelector('input[name="' + coffeeName + '"]:checked').value;
+      var availability = document.querySelector('#availability-' + coffeeName);
+      availability.textContent = stock;
     }
   </script>
+</head>
+<body>
+  <h1>Staff Page - Viktor's Coffee Cafe</h1>
+  
+  <h2>Update Coffee Stock</h2>
+  <form class="stock-form">
+    <label>
+      <input type="radio" name="arabica" value="In Stock" checked> In Stock
+    </label>
+    <label>
+      <input type="radio" name="arabica" value="Out of Stock"> Out of Stock
+    </label>
+    <button class="update-button" type="button" onclick="updateStock('arabica')">Update Arabica</button>
+  </form>
+  <form class="stock-form">
+    <label>
+      <input type="radio" name="ristretto" value="In Stock" checked> In Stock
+    </label>
+    <label>
+      <input type="radio" name="ristretto" value="Out of Stock"> Out of Stock
+    </label>
+    <button class="update-button" type="button" onclick="updateStock('ristretto')">Update Ristretto</button>
+  </form>
+  <form class="stock-form">
+    <label>
+      <input type="radio" name="intensi" value="In Stock" checked> In Stock
+    </label>
+    <label>
+      <input type="radio" name="intensi" value="Out of Stock"> Out of Stock
+    </label>
+    <button class="update-button" type="button" onclick="updateStock('intensi')">Update Intensi</button>
+  </form>
+  <form class="stock-form">
+    <label>
+      <input type="radio" name="verona" value="In Stock" checked> In Stock
+    </label>
+    <label>
+      <input type="radio" name="verona" value="Out of Stock"> Out of Stock
+    </label>
+    <button class="update-button" type="button" onclick="updateStock('verona')">Update Verona</button>
+  </form>
+  <form class="stock-form">
+    <label>
+      <input type="radio" name="lungo" value="In Stock" checked> In Stock
+    </label>
+    <label>
+      <input type="radio" name="lungo" value="Out of Stock"> Out of Stock
+    </label>
+    <button class="update-button" type="button" onclick="updateStock('lungo')">Update Lungo</button>
+  </form>
 </body>
 </html>
