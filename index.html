@@ -1,13 +1,130 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Coffee Shop</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <script src="script.js"></script>
+  <title>Viktor's Coffee Cafe</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #D2B48C;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 40px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 30px;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+
+    .order-button {
+      display: inline-block;
+      background-color: #8B4513;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .order-button:hover {
+      background-color: #A0522D;
+    }
+
+    .availability {
+      font-weight: bold;
+    }
+
+    .stamp-card {
+      margin-top: 20px;
+    }
+
+    .stamp-count {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .stamp-button {
+      display: inline-block;
+      background-color: #8B4513;
+      color: #FFFFFF;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .stamp-button:hover {
+      background-color: #A0522D;
+    }
+  </style>
+  <script>
+    // Coffee order functionality
+    function updateAvailability(coffeeName) {
+      var availability = document.querySelector('#availability-' + coffeeName);
+      var checkboxMilk = document.querySelector('input[name="milk-' + coffeeName + '"]');
+      var checkboxSugar = document.querySelector('input[name="sugar-' + coffeeName + '"]');
+
+      var milk = checkboxMilk.checked ? 'Yes' : 'No';
+      var sugar = checkboxSugar.checked ? 'Yes (+$0.50)' : 'No';
+
+      availability.textContent = 'In Stock';
+
+      var orderMessage = 'I would like to order ' + coffeeName + ' coffee\n\nWith Milk: ' + milk + '\nWith Sugar: ' + sugar;
+      var orderButton = document.querySelector('#order-button-' + coffeeName);
+      orderButton.href = 'sms:+17866132980?body=' + encodeURIComponent(orderMessage);
+    }
+
+    // Stamp card functionality
+    var stampCount = 0;
+
+    function addStamp() {
+      stampCount++;
+      updateStampCount();
+    }
+
+    function resetStamps() {
+      stampCount = 0;
+      updateStampCount();
+    }
+
+    function updateStampCount() {
+      var stampCountElement = document.querySelector('#stamp-count');
+      stampCountElement.textContent = stampCount;
+
+      var redeemButton = document.querySelector('#redeem-button');
+      redeemButton.textContent = 'Next coffee is free! (' + stampCount + ' stamp(s))';
+    }
+
+    // Stock update functionality
+    function updateStock(coffeeName) {
+      var stock = document.querySelector('input[name="' + coffeeName + '"]:checked').value;
+      var availability = document.querySelector('#availability-' + coffeeName);
+      availability.textContent = stock;
+    }
+  </script>
 </head>
 <body>
-  <h1>Welcome to Coffee Shop!</h1>
-
+  <h1>Welcome to Viktor's Coffee Cafe</h1>
+  
   <h2>Menu</h2>
   <ul>
     <li>
@@ -59,24 +176,28 @@
       <a id="order-button-verona" class="order-button" href="#">Order Verona</a>
     </li>
     <li>
-      <h3>Decaf</h3>
-      <p>A flavorful, caffeine-free coffee with a mellow taste and a smooth finish.</p>
-      <p>Availability: <span id="availability-decaf" class="availability">In Stock</span></p>
+      <h3>Lungo</h3>
+      <p>A long, smooth coffee with a mellow flavor and a delicate aroma.</p>
+      <p>Availability: <span id="availability-lungo" class="availability">In Stock</span></p>
       <label>
-        <input type="checkbox" name="milk-decaf"> Add Milk
+        <input type="checkbox" name="milk-lungo"> Add Milk
       </label>
       <label>
-        <input type="checkbox" name="sugar-decaf"> Add Sugar (+$0.50)
+        <input type="checkbox" name="sugar-lungo"> Add Sugar (+$0.50)
       </label>
-      <a id="order-button-decaf" class="order-button" href="#">Order Decaf</a>
+      <a id="order-button-lungo" class="order-button" href="#">Order Lungo</a>
     </li>
   </ul>
 
-  <h2>Stamp Card</h2>
-  <p class="stamp-count">0</p>
-  <button class="stamp-button" onclick="addStamp()">Add Stamp</button>
-  <button class="stamp-button" onclick="resetStamps()">Reset Stamps</button>
-  <p>Redeem your free coffee after collecting 10 stamps!</p>
-  <p><a id="redeem-button" class="order-button" href="#">Next coffee is free! (0 stamp(s))</a></p>
+  <div class="stamp-card">
+    <h2>Stamp Card</h2>
+    <p class="stamp-count">0</p>
+    <button class="stamp-button" onclick="addStamp()">Add Stamp</button>
+    <button class="stamp-button" onclick="resetStamps()">Reset Stamps</button>
+    <p>Redeem your free coffee after collecting 10 stamps!</p>
+    <p><a id="redeem-button" class="order-button" href="#">Next coffee is free! (0 stamp(s))</a></p>
+  </div>
+  
+  
 </body>
 </html>
