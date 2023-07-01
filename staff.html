@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Viktor's Coffee Cafe</title>
+  <title>Viktor's Coffee Cafe - Staff Page</title>
   <style>
+    /* CSS styles */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -12,237 +13,125 @@
 
     h1 {
       text-align: center;
+      margin-bottom: 20px;
     }
 
     h2 {
-      margin-top: 40px;
+      margin-bottom: 10px;
     }
 
     ul {
       list-style-type: none;
       padding: 0;
+      margin-bottom: 40px;
     }
 
     li {
-      margin-bottom: 30px;
-    }
-
-    h3 {
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 16px;
-    }
-
-    .order-button {
-      display: inline-block;
-      background-color: #8B4513;
-      color: #FFFFFF;
-      text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-
-    .order-button:hover {
-      background-color: #A0522D;
+      margin-bottom: 40px;
     }
 
     .availability {
       font-weight: bold;
     }
 
-    .stamp-card {
-      margin-top: 20px;
+    .availability-form {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
     }
 
-    .stamp-count {
-      font-weight: bold;
-      font-size: 18px;
+    .availability-label {
+      margin-right: 10px;
     }
 
-    .stamp-button {
-      display: inline-block;
+    .update-button {
       background-color: #8B4513;
       color: #FFFFFF;
-      text-decoration: none;
-      padding: 5px 10px;
+      border: none;
+      padding: 10px 20px;
       border-radius: 4px;
       transition: background-color 0.3s ease;
+      cursor: pointer;
     }
 
-    .stamp-button:hover {
+    .update-button:hover {
       background-color: #A0522D;
     }
   </style>
-  <script>
-    // Coffee order functionality
-    function updateAvailability(coffeeName) {
-      var availability = document.querySelector('#availability-' + coffeeName);
-      var checkboxMilk = document.querySelector('input[name="milk-' + coffeeName + '"]');
-      var checkboxSugar = document.querySelector('input[name="sugar-' + coffeeName + '"]');
-
-      var milk = checkboxMilk.checked ? 'Yes' : 'No';
-      var sugar = checkboxSugar.checked ? 'Yes (+$0.50)' : 'No';
-
-      availability.textContent = 'In Stock';
-
-      var orderMessage = 'I would like to order ' + coffeeName + ' coffee\n\nWith Milk: ' + milk + '\nWith Sugar: ' + sugar;
-      var orderButton = document.querySelector('#order-button-' + coffeeName);
-      orderButton.href = 'sms:+17866132980?body=' + encodeURIComponent(orderMessage);
-    }
-
-    // Stamp card functionality
-    var stampCount = 0;
-
-    function addStamp() {
-      stampCount++;
-      updateStampCount();
-    }
-
-    function resetStamps() {
-      stampCount = 0;
-      updateStampCount();
-    }
-
-    function updateStampCount() {
-      var stampCountElement = document.querySelector('#stamp-count');
-      stampCountElement.textContent = stampCount;
-
-      var redeemButton = document.querySelector('#redeem-button');
-      redeemButton.textContent = 'Next coffee is free! (' + stampCount + ' stamp(s))';
-    }
-  </script>
 </head>
 <body>
-  <h1>Welcome to Viktor's Coffee Cafe</h1>
-  
-  <h2>Menu</h2>
-  <ul>
-    <li>
-      <h3>Arabica</h3>
-      <p>A classic, well-balanced coffee with a smooth flavor and a hint of nuttiness.</p>
-      <p>Availability: <span id="availability-arabica" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-arabica"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-arabica"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-arabica" class="order-button" href="#">Order Arabica</a>
-    </li>
-    <li>
-      <h3>Ristretto</h3>
-      <p>A strong, concentrated coffee with a rich flavor and a smooth finish.</p>
-      <p>Availability: <span id="availability-ristretto" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-ristretto"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-ristretto"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-ristretto" class="order-button" href="#">Order Ristretto</a>
-    </li>
-    <li>
-      <h3>Intensi</h3>
-      <p>An intense, bold coffee with a deep flavor and a lingering aftertaste.</p>
-      <p>Availability: <span id="availability-intensi" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-intensi"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-intensi"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-intensi" class="order-button" href="#">Order Intensi</a>
-    </li>
-    <li>
-      <h3>Verona</h3>
-      <p>A smooth, full-bodied coffee with a rich flavor and a subtle hint of chocolate.</p>
-      <p>Availability: <span id="availability-verona" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-verona"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-verona"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-verona" class="order-button" href="#">Order Verona</a>
-    </li>
-    <li>
-      <h3>Lungo</h3>
-      <p>A long, smooth coffee with a mellow flavor and a delicate aroma.</p>
-      <p>Availability: <span id="availability-lungo" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-lungo"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-lungo"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-lungo" class="order-button" href="#">Order Lungo</a>
-    </li>
-  </ul>
+  <h1>Welcome to Viktor's Coffee Cafe - Staff Page!</h1>
 
-  <div class="stamp-card">
-    <h2>Stamp Card</h2>
-    <p>Stamps: <span id="stamp-count" class="stamp-count">0</span></p>
-    <button class="stamp-button" onclick="addStamp()">Add Stamp</button>
-    <button class="stamp-button" onclick="resetStamps()">Reset Stamps</button>
-    <p><button class="stamp-button" id="redeem-button">Next coffee is free! (0 stamp(s))</button></p>
-  </div>
+  <h2>Coffee Availability</h2>
 
-  <h2>Staff Page</h2>
-  <form class="stock-form">
-    <label>
-      <input type="radio" name="arabica" value="In Stock" checked> In Stock
-    </label>
-    <label>
-      <input type="radio" name="arabica" value="Out of Stock"> Out of Stock
-    </label>
-    <button class="update-button" type="button" onclick="updateStock('arabica')">Update Arabica</button>
+  <form action="update_stock.php" method="POST">
+    <ul>
+      <li>
+        <h3>Arabica</h3>
+        <p>Availability: <span id="availability-arabica" class="availability">In Stock</span></p>
+        <div class="availability-form">
+          <label for="arabica-availability" class="availability-label">Availability:</label>
+          <select name="availability" id="arabica-availability">
+            <option value="In Stock">In Stock</option>
+            <option value="Out of Stock">Out of Stock</option>
+          </select>
+          <input type="hidden" name="coffeeId" value="1">
+          <button type="submit" class="update-button">Update</button>
+        </div>
+      </li>
+      <li>
+        <h3>Ristretto</h3>
+        <p>Availability: <span id="availability-ristretto" class="availability">In Stock</span></p>
+        <div class="availability-form">
+          <label for="ristretto-availability" class="availability-label">Availability:</label>
+          <select name="availability" id="ristretto-availability">
+            <option value="In Stock">In Stock</option>
+            <option value="Out of Stock">Out of Stock</option>
+          </select>
+          <input type="hidden" name="coffeeId" value="2">
+          <button type="submit" class="update-button">Update</button>
+        </div>
+      </li>
+      <li>
+        <h3>Intensi</h3>
+        <p>Availability: <span id="availability-intensi" class="availability">In Stock</span></p>
+        <div class="availability-form">
+          <label for="intensi-availability" class="availability-label">Availability:</label>
+          <select name="availability" id="intensi-availability">
+            <option value="In Stock">In Stock</option>
+            <option value="Out of Stock">Out of Stock</option>
+          </select>
+          <input type="hidden" name="coffeeId" value="3">
+          <button type="submit" class="update-button">Update</button>
+        </div>
+      </li>
+      <li>
+        <h3>Espresso</h3>
+        <p>Availability: <span id="availability-espresso" class="availability">In Stock</span></p>
+        <div class="availability-form">
+          <label for="espresso-availability" class="availability-label">Availability:</label>
+          <select name="availability" id="espresso-availability">
+            <option value="In Stock">In Stock</option>
+            <option value="Out of Stock">Out of Stock</option>
+          </select>
+          <input type="hidden" name="coffeeId" value="4">
+          <button type="submit" class="update-button">Update</button>
+        </div>
+      </li>
+      <li>
+        <h3>Lungo</h3>
+        <p>Availability: <span id="availability-lungo" class="availability">In Stock</span></p>
+        <div class="availability-form">
+          <label for="lungo-availability" class="availability-label">Availability:</label>
+          <select name="availability" id="lungo-availability">
+            <option value="In Stock">In Stock</option>
+            <option value="Out of Stock">Out of Stock</option>
+          </select>
+          <input type="hidden" name="coffeeId" value="5">
+          <button type="submit" class="update-button">Update</button>
+        </div>
+      </li>
+    </ul>
   </form>
-  <form class="stock-form">
-    <label>
-      <input type="radio" name="ristretto" value="In Stock" checked> In Stock
-    </label>
-    <label>
-      <input type="radio" name="ristretto" value="Out of Stock"> Out of Stock
-    </label>
-    <button class="update-button" type="button" onclick="updateStock('ristretto')">Update Ristretto</button>
-  </form>
-  <form class="stock-form">
-    <label>
-      <input type="radio" name="intensi" value="In Stock" checked> In Stock
-    </label>
-    <label>
-      <input type="radio" name="intensi" value="Out of Stock"> Out of Stock
-    </label>
-    <button class="update-button" type="button" onclick="updateStock('intensi')">Update Intensi</button>
-  </form>
-  <form class="stock-form">
-    <label>
-      <input type="radio" name="verona" value="In Stock" checked> In Stock
-    </label>
-    <label>
-      <input type="radio" name="verona" value="Out of Stock"> Out of Stock
-    </label>
-    <button class="update-button" type="button" onclick="updateStock('verona')">Update Verona</button>
-  </form>
-  <form class="stock-form">
-    <label>
-      <input type="radio" name="lungo" value="In Stock" checked> In Stock
-    </label>
-    <label>
-      <input type="radio" name="lungo" value="Out of Stock"> Out of Stock
-    </label>
-    <button class="update-button" type="button" onclick="updateStock('lungo')">Update Lungo</button>
-  </form>
-
-  <script>
-    function updateStock(coffeeName) {
-      var stock = document.querySelector('input[name="' + coffeeName + '"]:checked').value;
-      var availability = document.querySelector('#availability-' + coffeeName);
-      availability.textContent = stock;
-    }
-  </script>
 </body>
 </html>

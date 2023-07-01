@@ -2,7 +2,9 @@
 <html>
 <head>
   <title>Viktor's Coffee Cafe</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
   <style>
+    /* Paste the CSS styles here */
     body {
       font-family: Arial, sans-serif;
       margin: 0;
@@ -12,27 +14,25 @@
 
     h1 {
       text-align: center;
+      margin-bottom: 20px;
     }
 
     h2 {
-      margin-top: 40px;
+      margin-bottom: 10px;
     }
 
     ul {
       list-style-type: none;
       padding: 0;
+      margin-bottom: 40px;
     }
 
     li {
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
 
-    h3 {
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 16px;
+    .availability {
+      font-weight: bold;
     }
 
     .order-button {
@@ -48,156 +48,59 @@
     .order-button:hover {
       background-color: #A0522D;
     }
-
-    .availability {
-      font-weight: bold;
-    }
-
-    .stamp-card {
-      margin-top: 20px;
-    }
-
-    .stamp-count {
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    .stamp-button {
-      display: inline-block;
-      background-color: #8B4513;
-      color: #FFFFFF;
-      text-decoration: none;
-      padding: 5px 10px;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-
-    .stamp-button:hover {
-      background-color: #A0522D;
-    }
   </style>
   <script>
-    // Coffee order functionality
-    function updateAvailability(coffeeName) {
-      var availability = document.querySelector('#availability-' + coffeeName);
-      var checkboxMilk = document.querySelector('input[name="milk-' + coffeeName + '"]');
-      var checkboxSugar = document.querySelector('input[name="sugar-' + coffeeName + '"]');
+    function sendOrderNotification(flavor) {
+      const phoneNumber = '7866132980';
+      const message = `I would like to order ${flavor} coffee!`;
 
-      var milk = checkboxMilk.checked ? 'Yes' : 'No';
-      var sugar = checkboxSugar.checked ? 'Yes (+$0.50)' : 'No';
-
-      availability.textContent = 'In Stock';
-
-      var orderMessage = 'I would like to order ' + coffeeName + ' coffee\n\nWith Milk: ' + milk + '\nWith Sugar: ' + sugar;
-      var orderButton = document.querySelector('#order-button-' + coffeeName);
-      orderButton.href = 'sms:+17866132980?body=' + encodeURIComponent(orderMessage);
-    }
-
-    // Stamp card functionality
-    var stampCount = 0;
-
-    function addStamp() {
-      stampCount++;
-      updateStampCount();
-    }
-
-    function resetStamps() {
-      stampCount = 0;
-      updateStampCount();
-    }
-
-    function updateStampCount() {
-      var stampCountElement = document.querySelector('#stamp-count');
-      stampCountElement.textContent = stampCount;
-
-      var redeemButton = document.querySelector('#redeem-button');
-      redeemButton.textContent = 'Next coffee is free! (' + stampCount + ' stamp(s))';
-    }
-
-    // Stock update functionality
-    function updateStock(coffeeName) {
-      var stock = document.querySelector('input[name="' + coffeeName + '"]:checked').value;
-      var availability = document.querySelector('#availability-' + coffeeName);
-      availability.textContent = stock;
+      // Open SMS app with pre-filled message addressed to the specified number
+      const smsUrl = `sms:${phoneNumber}?body=${encodeURIComponent(message)}`;
+      window.location.href = smsUrl;
     }
   </script>
 </head>
 <body>
-  <h1>Welcome to Viktor's Coffee Cafe</h1>
-  
+  <h1>Welcome to Viktor's Coffee Cafe!</h1>
+
   <h2>Menu</h2>
   <ul>
     <li>
       <h3>Arabica</h3>
       <p>A classic, well-balanced coffee with a smooth flavor and a hint of nuttiness.</p>
       <p>Availability: <span id="availability-arabica" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-arabica"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-arabica"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-arabica" class="order-button" href="#">Order Arabica</a>
+      <a id="order-button-arabica" class="order-button" href="#" onclick="sendOrderNotification('Arabica')">Order Arabica</a>
     </li>
     <li>
       <h3>Ristretto</h3>
       <p>A strong, concentrated coffee with a rich flavor and a smooth finish.</p>
       <p>Availability: <span id="availability-ristretto" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-ristretto"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-ristretto"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-ristretto" class="order-button" href="#">Order Ristretto</a>
+      <a id="order-button-ristretto" class="order-button" href="#" onclick="sendOrderNotification('Ristretto')">Order Ristretto</a>
     </li>
     <li>
       <h3>Intensi</h3>
       <p>An intense, bold coffee with a deep flavor and a lingering aftertaste.</p>
       <p>Availability: <span id="availability-intensi" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-intensi"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-intensi"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-intensi" class="order-button" href="#">Order Intensi</a>
+      <a id="order-button-intensi" class="order-button" href="#" onclick="sendOrderNotification('Intensi')">Order Intensi</a>
     </li>
     <li>
       <h3>Verona</h3>
       <p>A smooth, full-bodied coffee with a rich flavor and a subtle hint of chocolate.</p>
       <p>Availability: <span id="availability-verona" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-verona"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-verona"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-verona" class="order-button" href="#">Order Verona</a>
+      <a id="order-button-verona" class="order-button" href="#" onclick="sendOrderNotification('Verona')">Order Verona</a>
+    </li>
+    <li>
+      <h3>Espresso</h3>
+      <p>A concentrated coffee with a rich flavor and a velvety texture.</p>
+      <p>Availability: <span id="availability-espresso" class="availability">In Stock</span></p>
+      <a id="order-button-espresso" class="order-button" href="#" onclick="sendOrderNotification('Espresso')">Order Espresso</a>
     </li>
     <li>
       <h3>Lungo</h3>
-      <p>A long, smooth coffee with a mellow flavor and a delicate aroma.</p>
+      <p>A longer extraction of espresso resulting in a milder flavor and more volume.</p>
       <p>Availability: <span id="availability-lungo" class="availability">In Stock</span></p>
-      <label>
-        <input type="checkbox" name="milk-lungo"> Add Milk
-      </label>
-      <label>
-        <input type="checkbox" name="sugar-lungo"> Add Sugar (+$0.50)
-      </label>
-      <a id="order-button-lungo" class="order-button" href="#">Order Lungo</a>
+      <a id="order-button-lungo" class="order-button" href="#" onclick="sendOrderNotification('Lungo')">Order Lungo</a>
     </li>
   </ul>
-
-  <div class="stamp-card">
-    <h2>Stamp Card</h2>
-    <p class="stamp-count">0</p>
-    <button class="stamp-button" onclick="addStamp()">Add Stamp</button>
-    <button class="stamp-button" onclick="resetStamps()">Reset Stamps</button>
-    <p>Redeem your free coffee after collecting 10 stamps!</p>
-    <p><a id="redeem-button" class="order-button" href="#">Next coffee is free! (0 stamp(s))</a></p>
-  </div>
-  
-  
 </body>
 </html>
